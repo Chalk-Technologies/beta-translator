@@ -15,10 +15,18 @@ inputs:
     required: false
   notionSecret:
     description: "notion secret"
-    required: true
+    required: false
   db:
     description: "notion database id"
-    required: true
+    required: false
+  uploadRepo:
+    default: Chalk-Technologies/beta-web
+    description: "The repo to upload to, including repo owner and without the .git extension, not case-sensitive"
+    required: false
+  uploadPath:
+    default: public/translations/
+    description: "The repo to upload to, including repo owner and without the .git extension, not case-sensitive"
+    required: false
 runs:
   using: docker
   image: Dockerfile
@@ -28,3 +36,5 @@ runs:
   - "-importField=${{ inputs.importField }}"
   - "-notionSecret=${{ inputs.notionSecret }}"
   - "-db=${{ inputs.db }}"
+  - "-uploadRepo=${{ inputs.uploadRepo }}"
+  - "-uploadPath=${{ inputs.uploadPath }}"
