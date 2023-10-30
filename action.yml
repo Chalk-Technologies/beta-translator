@@ -15,10 +15,10 @@ inputs:
     required: false
   notionSecret:
     description: "notion secret"
-    required: false
+    required: true
   db:
     description: "notion database id"
-    required: false
+    required: true
 runs:
   using: docker
   image: Dockerfile

@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/Chalk-Technologies/beta-translator/internal/notion"
+	"github.com/Chalk-Technologies/beta-translator/internal/repoUpload"
 	"github.com/Chalk-Technologies/beta-translator/internal/translation"
 	"log"
 )
@@ -17,7 +18,8 @@ func main() {
 	var importField = flag.String("importField", "Text English", "import all translations into field")
 	var notionSecret = flag.String("notionSecret", "", "notion secret")
 	var notionDB = flag.String("db", "", "notion database id")
-
+	var uploadRepo = flag.String("uploadRepo", "Chalk-Technologies/beta-web", "The repo to upload to, including repo owner and without the .git extension, not case-sensitive")
+	var uploadPath = flag.String("uploadPath", "public/translations/", "The repo to upload to, including repo owner and without the .git extension, not case-sensitive")
 	// todo add another flag for adding a new translation, need category, title, value
 	//var nFlag = flag.Int("n", 1234, "help message for flag n")
 
@@ -52,6 +54,27 @@ func main() {
 		}
 	}
 
+	if uploadPath != nil && uploadRepo != nil && *uploadRepo != "" && *uploadPath != "" {
+		repoUpload.Init()
+		if err = repoUpload.UploadFile("en.json", *uploadRepo, *uploadPath, tEN); err != nil {
+			log.Fatalf("got error on en.json upload: %v", err)
+		}
+		if err = repoUpload.UploadFile("es.json", *uploadRepo, *uploadPath, tES); err != nil {
+			log.Fatalf("got error on es.json upload: %v", err)
+		}
+		if err = repoUpload.UploadFile("de.json", *uploadRepo, *uploadPath, tDE); err != nil {
+			log.Fatalf("got error on de.json upload: %v", err)
+		}
+		if err = repoUpload.UploadFile("pt.json", *uploadRepo, *uploadPath, tPT); err != nil {
+			log.Fatalf("got error on pt.json upload: %v", err)
+		}
+		if err = repoUpload.UploadFile("fr.json", *uploadRepo, *uploadPath, tFR); err != nil {
+			log.Fatalf("got error on fr.json upload: %v", err)
+		}
+		//if err = repoUpload.UploadFile("km.json", *uploadRepo, *uploadPath, tKM); err != nil {
+		//	log.Fatalf("got error on km.json upload: %v", err)
+		//}
+	}
 	if export != nil && *export {
 		if err = tEN.Export("en.json"); err != nil {
 			log.Fatalf("got error on en.json export: %v", err)
