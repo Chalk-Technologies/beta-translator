@@ -2,7 +2,6 @@ package repoUpload
 
 import (
 	"context"
-	"encoding/base64"
 	"encoding/json"
 	"github.com/Chalk-Technologies/beta-translator/internal/translation"
 	"github.com/google/go-github/v56/github"
@@ -39,12 +38,12 @@ func UploadFile(fileName string, repo string, path string, content translation.T
 		return err
 	}
 	//var jsonEncodedString []byte
-	jsonEncodedString := base64.StdEncoding.EncodeToString(jsonString)
+	//jsonEncodedString := base64.StdEncoding.EncodeToString(jsonString)
 
 	opts := &github.RepositoryContentFileOptions{
 		SHA:     f.SHA,
 		Message: &uploadMsg,
-		Content: []byte(jsonEncodedString),
+		Content: jsonString,
 	}
 	if _, _, err = client.Repositories.UpdateFile(context.Background(), owner, r, p, opts); err != nil {
 		return err
