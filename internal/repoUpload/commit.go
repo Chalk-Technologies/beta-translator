@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"github.com/Chalk-Technologies/beta-translator/internal/translation"
 	"github.com/google/go-github/v56/github"
+	"log"
 	"os"
 	"strings"
 )
@@ -16,6 +17,7 @@ var client *github.Client
 
 func Init() {
 	githubToken := os.Getenv("GITHUB_TOKEN")
+	log.Printf("authenticating to github with token %v\n", githubToken)
 	client = github.NewClient(nil).WithAuthToken(githubToken)
 	return
 }
