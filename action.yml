@@ -18,7 +18,7 @@ inputs:
     required: false
   db:
     description: "notion database id"
-    required: false
+    required: true
   uploadRepo:
     default: Chalk-Technologies/beta-web
     description: "The repo to upload to, including repo owner and without the .git extension, not case-sensitive"
