@@ -12,7 +12,7 @@ type Values map[string]interface{}
 // writes a Translations object to a file specified by fileName
 func (t Translation) Export(fileName string) error {
 	// write it
-	jsonString, err := json.Marshal(t)
+	jsonString, err := json.MarshalIndent(t, "", "    ")
 	if err != nil {
 		return err
 	}

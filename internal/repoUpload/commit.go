@@ -33,7 +33,7 @@ func UploadFile(fileName string, repo string, path string, content translation.T
 		return err
 	}
 
-	jsonString, err := json.Marshal(content)
+	jsonString, err := json.MarshalIndent(content, "", "    ")
 	if err != nil {
 		return err
 	}
