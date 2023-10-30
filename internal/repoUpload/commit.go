@@ -38,13 +38,13 @@ func UploadFile(fileName string, repo string, path string, content translation.T
 	if err != nil {
 		return err
 	}
-	var jsonEncodedString []byte
-	base64.StdEncoding.Encode(jsonEncodedString, jsonString)
+	//var jsonEncodedString []byte
+	jsonEncodedString := base64.StdEncoding.EncodeToString(jsonString)
 
 	opts := &github.RepositoryContentFileOptions{
 		SHA:     f.SHA,
 		Message: &uploadMsg,
-		Content: jsonEncodedString,
+		Content: []byte(jsonEncodedString),
 	}
 	if _, _, err = client.Repositories.UpdateFile(context.Background(), owner, r, p, opts); err != nil {
 		return err
