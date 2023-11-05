@@ -18,8 +18,8 @@ func main() {
 	var importField = flag.String("importField", "Text English", "import all translations into field")
 	var notionSecret = flag.String("notionSecret", "", "notion secret")
 	var notionDB = flag.String("db", "", "notion database id")
-	var uploadRepo = flag.String("uploadRepo", "Chalk-Technologies/beta-web", "The repo to upload to, including repo owner and without the .git extension, not case-sensitive")
-	var uploadPath = flag.String("uploadPath", "public/translations/", "The repo to upload to, including repo owner and without the .git extension, not case-sensitive")
+	var uploadRepo = flag.String("uploadRepo", "", "The repo to upload to, including repo owner and without the .git extension, not case-sensitive")
+	var uploadPath = flag.String("uploadPath", "", "The repo to upload to, including repo owner and without the .git extension, not case-sensitive")
 	// todo add another flag for adding a new translation, need category, title, value
 	//var nFlag = flag.Int("n", 1234, "help message for flag n")
 

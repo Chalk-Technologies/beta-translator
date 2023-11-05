@@ -3,6 +3,7 @@ package repoUpload
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/Chalk-Technologies/beta-translator/internal/translation"
 	"github.com/google/go-github/v56/github"
 	"log"
@@ -21,7 +22,7 @@ func Init() {
 	return
 }
 
-var uploadMsg = "Auto-update translations - beta-translator"
+var uploadMsg = "Auto-update %s translations"
 
 func UploadFile(fileName string, repo string, path string, content translation.Translation) error {
 	owner := strings.Split(repo, "/")[0]
@@ -40,9 +41,10 @@ func UploadFile(fileName string, repo string, path string, content translation.T
 	//var jsonEncodedString []byte
 	//jsonEncodedString := base64.StdEncoding.EncodeToString(jsonString)
 
+	msg := fmt.Sprintf(uploadMsg, fileName)
 	opts := &github.RepositoryContentFileOptions{
 		SHA:     f.SHA,
-		Message: &uploadMsg,
+		Message: &msg,
 		Content: jsonString,
 	}
 	if _, _, err = client.Repositories.UpdateFile(context.Background(), owner, r, p, opts); err != nil {
