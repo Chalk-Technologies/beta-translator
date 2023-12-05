@@ -31,7 +31,7 @@ func main() {
 	//log.Println(*notionSecret)
 	notion.Init(*notionSecret)
 
-	tEN, tES, tFR, tDE, tPT, tKM, err := notion.GetTranslations(*notionDB)
+	tEN, tES, tFR, tDE, tPT, tKM, tKO, err := notion.GetTranslations(*notionDB)
 	if err != nil {
 		log.Fatalf("got error in translation %v", err)
 		return
@@ -71,6 +71,9 @@ func main() {
 		if err = repoUpload.UploadFile("fr.json", *uploadRepo, *uploadPath, tFR); err != nil {
 			log.Fatalf("got error on fr.json upload: %v", err)
 		}
+		if err = repoUpload.UploadFile("ko.json", *uploadRepo, *uploadPath, tKO); err != nil {
+			log.Fatalf("got error on ko.json upload: %v", err)
+		}
 		//if err = repoUpload.UploadFile("km.json", *uploadRepo, *uploadPath, tKM); err != nil {
 		//	log.Fatalf("got error on km.json upload: %v", err)
 		//}
@@ -94,6 +97,9 @@ func main() {
 		if err = tKM.Export("km.json"); err != nil {
 			log.Fatalf("got error on km.json export: %v", err)
 		}
+		if err = tKO.Export("ko.json"); err != nil {
+			log.Fatalf("got error on ko.json export: %v", err)
+		}
 	} else {
 		log.Printf("%v\n\n", tEN)
 		log.Printf("%v\n\n", tES)
@@ -101,6 +107,7 @@ func main() {
 		log.Printf("%v\n\n", tDE)
 		log.Printf("%v\n\n", tPT)
 		log.Printf("%v\n\n", tKM)
+		log.Printf("%v\n\n", tKO)
 	}
 
 }

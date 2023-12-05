@@ -15,11 +15,11 @@ func Init(secret string) {
 }
 
 // get the translations from the notion table
-func GetTranslations(databaseID string) (translation.Translation, translation.Translation, translation.Translation, translation.Translation, translation.Translation, translation.Translation, error) {
+func GetTranslations(databaseID string) (translation.Translation, translation.Translation, translation.Translation, translation.Translation, translation.Translation, translation.Translation, translation.Translation, error) {
 	ctx := context.Background()
 	query, err := client.Database.Query(ctx, notionapi.DatabaseID(databaseID), nil)
 	if err != nil {
-		return nil, nil, nil, nil, nil, nil, err
+		return nil, nil, nil, nil, nil, nil, nil, err
 	}
 
 	tEN := make(translation.Translation)
@@ -28,6 +28,7 @@ func GetTranslations(databaseID string) (translation.Translation, translation.Tr
 	tFR := make(translation.Translation)
 	tPT := make(translation.Translation)
 	tKM := make(translation.Translation)
+	tKO := make(translation.Translation)
 
 	next := true
 
@@ -42,6 +43,7 @@ func GetTranslations(databaseID string) (translation.Translation, translation.Tr
 			var de string
 			var pt string
 			var km string
+			var ko string
 
 			//r.Properties.UnmarshalJSON()
 			for label, p := range r.Properties {
@@ -88,6 +90,12 @@ func GetTranslations(databaseID string) (translation.Translation, translation.Tr
 
 						km = pr.RichText[0].PlainText
 					}
+				case "Text Korean":
+					pr := p.(*notionapi.RichTextProperty)
+					if len(pr.RichText) > 0 {
+
+						ko = pr.RichText[0].PlainText
+					}
 				}
 			}
 			tEN.AddValue(cat, l, en)
@@ -96,6 +104,7 @@ func GetTranslations(databaseID string) (translation.Translation, translation.Tr
 			tFR.AddValue(cat, l, fr)
 			tPT.AddValue(cat, l, pt)
 			tKM.AddValue(cat, l, km)
+			tKO.AddValue(cat, l, ko)
 
 		}
 
@@ -105,12 +114,12 @@ func GetTranslations(databaseID string) (translation.Translation, translation.Tr
 			}
 			query, err = client.Database.Query(ctx, notionapi.DatabaseID(databaseID), dbqr)
 			if err != nil {
-				return nil, nil, nil, nil, nil, nil, err
+				return nil, nil, nil, nil, nil, nil, nil, err
 			}
 		} else {
 			next = false
 		}
 	}
 
-	return tEN, tES, tFR, tDE, tPT, tKM, nil
+	return tEN, tES, tFR, tDE, tPT, tKM, tKO, nil
 }
