@@ -89,9 +89,9 @@ func main() {
 		if err = repoUpload.UploadFile("ko.json", *uploadRepo, *uploadPath, tKO); err != nil {
 			log.Fatalf("got error on ko.json upload: %v", err)
 		}
-		//if err = repoUpload.UploadFile("km.json", *uploadRepo, *uploadPath, tKM); err != nil {
-		//	log.Fatalf("got error on km.json upload: %v", err)
-		//}
+		if err = repoUpload.UploadFile("km.json", *uploadRepo, *uploadPath, tKM); err != nil {
+			log.Fatalf("got error on km.json upload: %v", err)
+		}
 	}
 	if export != nil && *export {
 		if err = tEN.Export("en.json"); err != nil {
