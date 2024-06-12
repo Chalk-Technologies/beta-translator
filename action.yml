@@ -6,18 +6,11 @@ inputs:
     default: false
     description: "export all translations from the notion DB"
     required: false
-  importFile:
-    description: "import all translations file"
+  sheetId:
+    description: "google sheets id"
     required: false
-  importField:
-    default: Text English
-    description: "import all translations into field"
-    required: false
-  notionSecret:
-    description: "notion secret"
-    required: false
-  db:
-    description: "notion database id"
+  addValue:
+    description: "New row to add, format category.keyInCamelCase: Translation in English"
     required: false
   uploadRepo:
     description: "The repo to upload to, including repo owner and without the .git extension, not case-sensitive"
@@ -30,9 +23,7 @@ runs:
   image: Dockerfile
   args:
   - "-export=${{ inputs.export }}"
-  - "-importFile=${{ inputs.importFile }}"
-  - "-importField=${{ inputs.importField }}"
-  - "-notionSecret=${{ inputs.notionSecret }}"
-  - "-db=${{ inputs.db }}"
+  - "-sheetId=${{ inputs.sheetId }}"
+  - "-addValue=${{ inputs.addValue }}"
   - "-uploadRepo=${{ inputs.uploadRepo }}"
   - "-uploadPath=${{ inputs.uploadPath }}"
