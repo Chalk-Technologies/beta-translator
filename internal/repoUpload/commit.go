@@ -14,9 +14,12 @@ import (
 // add export files to repo
 
 var client *github.Client
+var branch *string
 
 func Init() {
 	githubToken := os.Getenv("GITHUB_TOKEN")
+	b := os.Getenv("GITHUB_REF")
+	branch = &b
 	log.Printf("authenticating to github with token %v\n", githubToken)
 	client = github.NewClient(nil).WithAuthToken(githubToken)
 	return
@@ -46,6 +49,7 @@ func UploadFile(fileName string, repo string, path string, content translation.T
 		SHA:     f.SHA,
 		Message: &msg,
 		Content: jsonString,
+		Branch:  branch,
 	}
 	if _, _, err = client.Repositories.UpdateFile(context.Background(), owner, r, p, opts); err != nil {
 		return err
