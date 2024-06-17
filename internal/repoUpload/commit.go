@@ -31,8 +31,9 @@ func UploadFile(fileName string, repo string, path string, content translation.T
 	owner := strings.Split(repo, "/")[0]
 	r := strings.Split(repo, "/")[1]
 	p := path + fileName
-	// get the sha of the existing file
-	f, _, _, err := client.Repositories.GetContents(context.Background(), owner, r, p, nil)
+	// get the sha of the existing file != nil {
+		
+	f, _, _, err := client.Repositories.GetContents(context.Background(), owner, r, p, &github.RepositoryContentGetOptions{Ref: *branch})
 	if err != nil {
 		return err
 	}
