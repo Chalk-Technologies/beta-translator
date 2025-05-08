@@ -1,17 +1,12 @@
 on:
   workflow_dispatch
 jobs:
-  goaction:
+  upload:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.21.x'
-      - name: Install dependencies
-        run: go get .
-      - name: Build
-        run: go build -v ./...
-      - name: Test with the Go CLI
-        run: go run cmd/main.go -sheetId 1cNwPjNEHhUdYrCx31G88trjBv7ZZDsoEXBMnfevSNJo -upload
+          go-version: '1.23.x'
+      - run: go run cmd/main.go -sheetId 1cNwPjNEHhUdYrCx31G88trjBv7ZZDsoEXBMnfevSNJo -upload
