@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/Chalk-Technologies/beta-translator/internal/cloudStorage"
 	"github.com/Chalk-Technologies/beta-translator/internal/googleSheets"
 	"github.com/Chalk-Technologies/beta-translator/internal/repoUpload"
 	"log"
@@ -13,6 +14,7 @@ func main() {
 	// then we will create json files to handle the translations in our react app
 	// get flags
 	var export = flag.Bool("export", false, "export all translations from the notion DB")
+	var upload = flag.Bool("upload", false, "export all translations to cloud storage")
 	//var importFile = flag.String("importFile", "", "import all translations file")
 	//var importField = flag.String("importField", "Text English", "import all translations into field")
 	//var notionSecret = flag.String("notionSecret", "", "notion secret")
@@ -91,6 +93,32 @@ func main() {
 		}
 		if err = repoUpload.UploadFile("km.json", *uploadRepo, *uploadPath, tKM); err != nil {
 			log.Fatalf("got error on km.json upload: %v", err)
+		}
+	}
+	if upload != nil && *upload {
+		if err = cloudStorage.Init(); err != nil {
+			return
+		}
+		if err = cloudStorage.UploadTranslations("en", tEN); err != nil {
+			log.Fatalf("got error on en.json upload: %v", err)
+		}
+		if err = cloudStorage.UploadTranslations("es", tES); err != nil {
+			log.Fatalf("got error on es.json upload: %v", err)
+		}
+		if err = cloudStorage.UploadTranslations("de", tDE); err != nil {
+			log.Fatalf("got error on de.json upload: %v", err)
+		}
+		if err = cloudStorage.UploadTranslations("fr", tFR); err != nil {
+			log.Fatalf("got error on fr.json upload: %v", err)
+		}
+		if err = cloudStorage.UploadTranslations("ko", tKO); err != nil {
+			log.Fatalf("got error on ko.json upload: %v", err)
+		}
+		if err = cloudStorage.UploadTranslations("km", tKM); err != nil {
+			log.Fatalf("got error on km.json upload: %v", err)
+		}
+		if err = cloudStorage.UploadTranslations("pt", tPT); err != nil {
+			log.Fatalf("got error on pt.json upload: %v", err)
 		}
 	}
 	if export != nil && *export {
