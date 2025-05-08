@@ -15,3 +15,5 @@ go run cmd/main.go -sheetId 1cNwPjNEHhUdYrCx31G88trjBv7ZZDsoEXBMnfevSNJo -upload
 `go run cmd/main.go -notionSecret <YOUR_NOTION_SECRET> -importFile es_current.json -importField "Text Spanish" -db <YOUR_NOTION_DB_ID>`
 
 
+## Set up GitHub action in new repo
+Add principal set in github actions service account referencing the new repo: https://console.cloud.google.com/iam-admin/serviceaccounts/details/104404874495060497229/permissions?orgonly=true&project=beta-291013&supportedpurview=organizationId
