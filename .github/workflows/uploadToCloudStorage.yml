@@ -5,6 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          create_credentials_file: 'true'
+          workload_identity_provider: 'projects/459292772721/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider'
+          service_account: 'github-actions@beta-291013.iam.gserviceaccount.com'
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
