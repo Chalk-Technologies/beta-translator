@@ -28,6 +28,8 @@ func main() {
 
 	flag.Parse()
 
+	log.Printf("upload is %v\n\n", upload)
+
 	//init the notion client
 	// todo check for nil value in notionsecret
 
@@ -143,14 +145,5 @@ func main() {
 		if err = tKO.Export("ko.json"); err != nil {
 			log.Fatalf("got error on ko.json export: %v", err)
 		}
-	} else {
-		log.Printf("%v\n\n", tEN)
-		log.Printf("%v\n\n", tES)
-		log.Printf("%v\n\n", tFR)
-		log.Printf("%v\n\n", tDE)
-		log.Printf("%v\n\n", tPT)
-		log.Printf("%v\n\n", tKM)
-		log.Printf("%v\n\n", tKO)
 	}
-
 }
